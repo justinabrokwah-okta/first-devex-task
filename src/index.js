@@ -53,6 +53,7 @@ client.createGroup(newGroup)
 // first find user using login or ID
 // then add to group using group ID
 /*
+// Used environment variables below to use same user and group created, didn't want to create tons of new entries
 client.getUser(process.env.USER_ID)
 .then(user => {
     user.addToGroup(process.env.GROUP_ID)
@@ -64,6 +65,7 @@ client.getUser(process.env.USER_ID)
 
 // Add SMS verification factor for org using axios
 // BETA function so using POST call
+/*
 const newFactor = {
     factorType: "sms",
     provider: "OKTA",
@@ -80,6 +82,7 @@ const config = {
     headers: axios_headers
 };
 let req_url = `${process.env.OKTA_DOMAIN}api/v1/org/factors/okta_sms/lifecycle/activate`;
+*/
 
 // activate SMS on organization
 /*
@@ -99,3 +102,6 @@ axios.post(req_url, null, config)
     })
     .catch(err => console.log(err.response.data));
    */
+
+// Can also make this into a cleaner script where values returned from previous client calls
+// determine inputs for future calls (e.g. user ID returned for new user saved into variable for adding user to group later)
