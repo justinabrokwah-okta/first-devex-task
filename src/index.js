@@ -33,6 +33,7 @@ client.createUser(newUser)
 */
 
 // Create a group and add to Okta org.
+/*
 const newGroup = {
     profile: {
         name: 'NBA Players',
@@ -41,7 +42,19 @@ const newGroup = {
 };
 
 client.createGroup(newGroup)
-    .then(group => {
-        console.log('Created group', group);
+.then(group => {
+    console.log('Created group', group);
+})
+.catch(err => console.log(err));
+ */
+
+// Add User to Group
+// first find user using login or ID
+// then add to group using group ID
+client.getUser(process.env.USER_ID)
+    .then(user => {
+        user.addToGroup(process.env.GROUP_ID)
+            .then(() => console.log('User added to group!'))
+            .catch(err => console.log(err));
     })
     .catch(err => console.log(err));
