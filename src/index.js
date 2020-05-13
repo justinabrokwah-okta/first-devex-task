@@ -10,6 +10,7 @@ const client = new okta.Client({
 // console.log(client);
 
 // Create new user object and add to Okta org.
+/*
 const newUser = {
     profile: {
         firstName: 'Michael',
@@ -25,7 +26,22 @@ const newUser = {
 };
 
 client.createUser(newUser)
-    .then(user => {
-        console.log('Created user', user);
+.then(user => {
+    console.log('Created user', user);
+})
+.catch(err => console.log(err));
+*/
+
+// Create a group and add to Okta org.
+const newGroup = {
+    profile: {
+        name: 'NBA Players',
+        description: 'Professional Association of NBA Players'
+    }
+};
+
+client.createGroup(newGroup)
+    .then(group => {
+        console.log('Created group', group);
     })
     .catch(err => console.log(err));
