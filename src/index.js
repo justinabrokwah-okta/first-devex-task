@@ -91,9 +91,11 @@ axios.post(req_url, null, config)
  */
 
  // enroll user in SMS
+ /*
  req_url = `${process.env.OKTA_DOMAIN}api/v1/users/${process.env.USER_ID}/factors?activate=true`;
  axios.post(req_url, newFactor, config)
-.then(res => {
-    console.log(res.res.data);
-})
-.catch(err => console.log(err.response.data));
+ .then(res => {
+     console.log(res.res.data);
+    })
+    .catch(err => console.log(err.response.data));
+   */
