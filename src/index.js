@@ -1,4 +1,5 @@
 const okta = require('@okta/okta-sdk-nodejs');
+const axios = require('axios')
 require('dotenv').config();
 
 const client = new okta.Client({
@@ -51,10 +52,48 @@ client.createGroup(newGroup)
 // Add User to Group
 // first find user using login or ID
 // then add to group using group ID
+/*
 client.getUser(process.env.USER_ID)
-    .then(user => {
-        user.addToGroup(process.env.GROUP_ID)
-            .then(() => console.log('User added to group!'))
-            .catch(err => console.log(err));
-    })
+.then(user => {
+    user.addToGroup(process.env.GROUP_ID)
+    .then(() => console.log('User added to group!'))
     .catch(err => console.log(err));
+})
+.catch(err => console.log(err));
+*/
+
+// Add SMS verification factor for org using axios
+// BETA function so using POST call
+const newFactor = {
+    factorType: "sms",
+    provider: "OKTA",
+    profile: {
+        phoneNumber: process.env.PHONE_NUMBER
+    }
+};
+const axios_headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    Authorization: `SSWS ${process.env.API_TOKEN}`
+};
+const config = {
+    headers: axios_headers
+};
+let req_url = `${process.env.OKTA_DOMAIN}api/v1/org/factors/okta_sms/lifecycle/activate`;
+
+// activate SMS on organization
+/*
+axios.post(req_url, null, config)
+.then(res => {
+    console.log(res);
+})
+.catch(err => console.log(err.response));
+ */
+
+ // enroll user in SMS
+ req_url = `${process.env.OKTA_DOMAIN}api/v1/users/${process.env.USER_ID}/factors?activate=true`;
+ axios.post(req_url, newFactor, config)
+.then(res => {
+    console.log(res.res.data);
+})
+.catch(err => console.log(err.response.data));
